@@ -41,13 +41,13 @@ def preprocessing(df):
     df = df.drop('subcontinent', axis=1)
     
     # 비율이 적은 범주형 컬럼 값은 'Other'로 묶어서 대체함
-    tmp_list = df['browser'].value_counts(normalize=True).loc[lambda x : x > min_ratio].index.tolist()
+    tmp_list = df['browser'].value_counts(normalize=True).loc[lambda x : x > 0.01].index.tolist()
     df['browser'] = df['browser'].apply(lambda x : x if x in tmp_list else 'Other')
-    tmp_list = df['OS'].value_counts(normalize=True).loc[lambda x : x > min_ratio].index.tolist()
+    tmp_list = df['OS'].value_counts(normalize=True).loc[lambda x : x > 0.05].index.tolist()
     df['OS'] = df['OS'].apply(lambda x : x if x in tmp_list else 'Other')
-    tmp_list = df['country'].value_counts(normalize=True).loc[lambda x : x > min_ratio].index.tolist()
+    tmp_list = df['country'].value_counts(normalize=True).loc[lambda x : x > 0.01].index.tolist()
     df['country'] = df['country'].apply(lambda x : x if x in tmp_list else 'Other')
-    tmp_list = df['traffic_source'].value_counts(normalize=True).loc[lambda x : x > min_ratio].index.tolist()
+    tmp_list = df['traffic_source'].value_counts(normalize=True).loc[lambda x : x > 0.01].index.tolist()
     df['traffic_source'] = df['traffic_source'].apply(lambda x : x if x in tmp_list else 'Other')
 
     # 두 개의 컬럼의 Category 종류를 추출하여 새로운 컬럼으로 합침
